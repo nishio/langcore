@@ -1,4 +1,4 @@
-# -*- enoding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 """
 mini-Forth
 Forth解説のための最小限のForth実装
