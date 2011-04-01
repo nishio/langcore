@@ -2,6 +2,7 @@
 """
 mini-Forth
 Forth解説のための最小限のForth実装
++ ワードの定義機能
 """
 
 data = ": dp dup print ; 1 2 dp + 3 * print"
