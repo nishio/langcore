@@ -18,25 +18,22 @@ set a1 v1 : mem[a1]をv1にする
 sub v1 : mem[0]からv1を引く
 """
 
-memory = [0] * 100
-memory[50] = 51
-# 50をスタックの頭を指す値, 51を指している
-# 51からがスタック
-# 0を返り値
-# 40からが引数
+memory = [0] * 10
+RETURN_ADDR = 5 # returnする場所を格納しておく番地
 
 # maxの実装
 code = [
-    ("set", 0, 10),  # A = 10
-    ("if_eq", 0, 5), # 1: if A == 0 goto 5
-    ("sub", 1),      # A = A - 1
-
-    ("print", 0),    # print A
-    ("jump", 1),     # 5: goto 1
-
-    ("if_gt", 1, 2, ??),
-    ("return", 2),
-    ("return", 1),
+    ("set", 1, 10),      # B = 10
+    ("set", 2, 20),      # C = 20
+    ("call", 8),         # call max(B, C)
+    ("print", 0),        # print A
+    ("set", 1, 30),      # B = 30
+    ("call", 8),         # call max(B, C)
+    ("print", 0),        # print A
+    ("jump", 999),       # goto end
+    ("if_gt", 1, 2, 10), # 9: (subroutine max)
+    ("return", 2),       # return C 
+    ("return", 1),       # return B
 ]
 
 def eval(code):
@@ -53,20 +50,20 @@ def eval(code):
             if memory[0] == line[1]:
                 cur = line[2]
         elif op == "if_gt":
-            if memory[0] > line[1]:
-                cur = line[2]
+            print memory, line
+            if memory[line[1]] > memory[line[2]]:
+                cur = line[3]
+
         elif op == "sub":
             memory[0] -= line[1]
         elif op == "jump":
             cur = line[1]
         elif op == "return":
-            esp = memory[50] # TODO 名前
-            ret = memory[esp]
+            ret = memory[RETURN_ADDR]
             cur = ret
             memory[0] = memory[line[1]]
         elif op == "call":
-            memory[50] += 1 # TODO 名前
-            memory[memory[50]] = cur + 1
+            memory[RETURN_ADDR] = cur # +1でないのはすでに上で1進めているから
             cur = line[1]
             
         else:
