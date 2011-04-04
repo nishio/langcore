@@ -44,6 +44,10 @@ def eval(code):
         op = line[0]
         if op == "set":
             memory[line[1]] = line[2]
+
+        elif op == "mov":
+            memory[line[1]] = memory[line[2]]
+
         elif op == "print":
             print memory[line[1]]
 
