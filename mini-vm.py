@@ -67,6 +67,8 @@ def eval(code):
             cur = line[1]
             
         else:
-            raise NotImplementedError
+            raise NotImplementedError(op)
+
+
 eval(code)
 
