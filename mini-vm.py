@@ -46,23 +46,13 @@ def eval(code):
         if op == "set":
             memory[line[1]] = line[2]
 
-        elif op == "mov":
-            memory[line[1]] = memory[line[2]]
-
         elif op == "print":
             print memory[line[1]]
-
-        elif op == "if_eq":
-            if memory[0] == line[1]:
-                cur = line[2]
 
         elif op == "if_gt":
             print memory, line
             if memory[line[1]] > memory[line[2]]:
                 cur = line[3]
-
-        elif op == "sub":
-            memory[0] -= line[1]
 
         elif op == "jump":
             cur = line[1]
