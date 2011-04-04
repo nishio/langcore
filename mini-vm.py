@@ -32,7 +32,7 @@ code = [
     ("print", 0),        # print A
     ("jump", 999),       # goto end
     ("if_gt", 1, 2, 10), # 9: (subroutine max)
-    ("return", 2),       # return C 
+    ("return", 2),       # return C
     ("return", 1),       # return B
 ]
 
@@ -46,9 +46,11 @@ def eval(code):
             memory[line[1]] = line[2]
         elif op == "print":
             print memory[line[1]]
+
         elif op == "if_eq":
             if memory[0] == line[1]:
                 cur = line[2]
+
         elif op == "if_gt":
             print memory, line
             if memory[line[1]] > memory[line[2]]:
@@ -56,16 +58,19 @@ def eval(code):
 
         elif op == "sub":
             memory[0] -= line[1]
+
         elif op == "jump":
             cur = line[1]
+
         elif op == "return":
             ret = memory[RETURN_ADDR]
             cur = ret
             memory[0] = memory[line[1]]
+
         elif op == "call":
             memory[RETURN_ADDR] = cur # +1でないのはすでに上で1進めているから
             cur = line[1]
-            
+
         else:
             raise NotImplementedError(op)
 
