@@ -4,24 +4,25 @@ mini-VM 解説のための最小限のVM
 最小限のサブルーチン呼び出し
 ・帰るアドレスはmem[5]に決め打ちで保管
 　→つまり呼び出しをネストできない
-　→ネストするにはどうすればいい？→スタック
+　→ネストするにはどうすればいい？→スタックを作ろう！って解説する？
 ・返り値はmem[0]に入る
 ・引数？なにそれ？
 　→呼び出し元とみえているものが同じ
 　　書き換えれば呼び出し元にも波及
 　→この問題の解決方法は動的スコープのところでやる
 
-jump pos : PCをposに変更
-if_eq a1 v1 pos : mem[a1] == v1 ならjump pos
 print a1 : mem[a1]をprint
 set a1 v1 : mem[a1]をv1にする
-sub v1 : mem[0]からv1を引く
+jump pos : PCをposに変更
+if_gt a1 v2 pos : mem[a1] == v1 ならjump pos
+call pos : 今のPC + 1をmem[RETURN_ADDR]に入れてからjump pos
+return a1 : mem[a1]の内容をmem[0]に入れてからmem[RETURN_ADDR]の指す位置へjump
 """
 
 memory = [0] * 10
 RETURN_ADDR = 5 # returnする場所を格納しておく番地
 
-# maxの実装
+# サブルーチン(max)の実装
 code = [
     ("set", 1, 10),      # B = 10
     ("set", 2, 20),      # C = 20
