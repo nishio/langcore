@@ -31,9 +31,9 @@ code = [
     ("call", 8),         # call max(B, C)
     ("print", 0),        # print A
     ("jump", 999),       # goto end
-    ("if_gt", 1, 2, 10), # 9: (subroutine max)
+    ("if_gt", 1, 2, 10), # 8(max): if B > C goto 10
     ("return", 2),       # return C
-    ("return", 1),       # return B
+    ("return", 1),       # 10: return B
 ]
 
 def eval(code):
