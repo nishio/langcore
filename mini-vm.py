@@ -38,6 +38,9 @@ def eval(code):
             memory[0] -= line[1]
         elif op == "jump":
             cur = line[1]
+        else:
+            raise NotImplementedError(op)
+
 
 eval(code)
 
